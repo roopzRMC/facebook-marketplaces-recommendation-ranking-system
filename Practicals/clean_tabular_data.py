@@ -7,6 +7,7 @@ import os
 # %%
 os.getcwd()
 # %%
+######## CLEAN THE IMAGES AND CSV FILES TO DATAFRAMES
 ## import Images CSV files
 images_df = pd.read_csv('Images.csv')
 images_df = images_df.drop(columns='Unnamed: 0', axis=1)
@@ -28,6 +29,9 @@ products_df.isna().sum()
 
 msno.heatmap(products_df)
 # %%
+products_df['price'].unique()
+# %%
+
 ### Clean products price column
 price_regex_pattern = {'£': "",
                        ',': ""}
@@ -35,6 +39,8 @@ price_regex_pattern = {'£': "",
 products_df['price'] = products_df['price'].replace(price_regex_pattern, regex=True)
 
 # %%
+products_df['price'].unique()
+# %%
 ## Instanstiate the price column as a float
 products_df['price'] = products_df['price'].astype(float)
 # %%
@@ -47,4 +53,12 @@ products_df['main_category'] = products_df['category'].str.split(' /', expand=Tr
 # %%
 ## CHeck that the categories are unique
 products_df['main_category'].unique()
+# %%
+######## Extracting Labels for Classification
+pd.get_dummies(products_df['main_category'])
+
+# %%
+products_df['main_category_code'] = products_df['main_category'].astype('category').cat.codes
+# %%
+products_df
 # %%
