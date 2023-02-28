@@ -40,3 +40,5 @@ for i in tqdm(range(len(os.listdir(image_dir)))):
     clean_image = resize_image(300, image)
     clean_image.save(os.path.join('clean_images',os.listdir(image_dir)[i]))
 
+
+# %%
