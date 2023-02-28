@@ -24,27 +24,27 @@ products_df = products_df.drop(columns='Unnamed: 0', axis=1)
 # %%
 ## Preview and check for null values
 products_df.head()
-products_df.isna().sum()
+products_df.isnull().sum()
 # %%
-
+## Test the products dataframe for missing data
 msno.heatmap(products_df)
 # %%
 products_df['price'].unique()
 # %%
 
-### Clean products price column
+### Clean products price column - removing the £ symbol and comma
 price_regex_pattern = {'£': "",
                        ',': ""}
 
 products_df['price'] = products_df['price'].replace(price_regex_pattern, regex=True)
 
 # %%
-products_df['price'].unique()
+products_df['price'].sort_values(ascending=False)
 # %%
 ## Instanstiate the price column as a float
 products_df['price'] = products_df['price'].astype(float)
 # %%
-products_df.info()
+products_df['price'].sort_values(ascending=False)
 # %%
 products_df.head()
 # %%
