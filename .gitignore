@@ -1,2 +1,5 @@
 clean_images/
 images/
+CustomerDataset/
+*.csv
+
