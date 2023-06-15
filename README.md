@@ -36,9 +36,9 @@ https://tensorboard.dev/experiment/s1zOX9TjQI2CrE6pYx0IBw/#scalars
 
 Screenshot for reference
 
-![training accuracy]("Practicals/tb_screenshots/training_accuracy.png")
+![training accuracy](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/training_accuracy.png)
 
-![validation accuracy]("Practicals/tb_screenshots/validation_accuracy.png")
+![validation accuracy](["Practicals/tb_screenshots/validation_accuracy.png"](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/validation_accuracy.png))
 
 
 
