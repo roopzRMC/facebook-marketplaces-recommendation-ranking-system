@@ -38,7 +38,7 @@ Screenshot for reference
 
 ![training accuracy](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/training_accuracy.png)
 
-![validation accuracy](["Practicals/tb_screenshots/validation_accuracy.png"](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/validation_accuracy.png))
+![validation accuracy](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/validation_accuracy.png)
 
 
 
