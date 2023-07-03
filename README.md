@@ -104,3 +104,44 @@ def process_img(image):
     print(features.shape)
     return features
 ```
+## New Model Version available **
+
+See ```resnet50_pretrained_13_class_unfreeze_v3_final.ipynb```
+
+This must use a GPU as it is optimised for GPU onlu
+
+## Image Processor
+
+Using the weights file generated from the model training script, the model is instantiated with the parameters and then the checkpoint is loaded of the final weights
+
+```process_img()``` extracts the train loader image processing steps as used in the train loader
+
+The model has the final layer removed to reveal a 2048 neuron output
+
+A loop is called to enter every folder in the training images directory
+* For each image in the training directory, an image is processed
+* The embeddings are extracted
+* The file name is split at the file type and is instantiated as the index
+* The index is written as a dictionary'es key and the embedding as the value
+
+## FAISS
+
+Refencing FAISS.ipynb
+
+Note this also relies on a GPU as the model has been optimised for GPU use.
+
+```!pip install faiss-gpu``` is required so that a GPU version of faiss is installed
+
+To create the FAISS search index, a faiss.IndexFlatL2() class is instantiated with a 2048 dimension (as per the shape of the image vector)
+
+The embeddings json file is imported as a dictionary, and converted in to a numpy array of type float32
+
+The embeddings are then added to the index using ```add()``` and the index is the deemed as being trained
+
+Once trained as a test, an image is passed through the image feature extractor to derive a 2048 neuron embedding
+
+The output is gflattened and converted into a float32 numpy array
+
+Using ```index.search(query_vector.reshape(1, -1), 4)```, the query vector is passed through the index with 4 nearest vectors specified as an argument
+
+This return 4 index values as similar embeddings
