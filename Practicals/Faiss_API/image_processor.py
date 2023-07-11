@@ -10,8 +10,7 @@ import torchvision.transforms as transforms
 def process_img(image):
     pil_to_tensor = transforms.ToTensor()
     resize = transforms.Resize((225,225))
-    img = Image.open(image).convert('RGB')
-
+    img = image.convert('RGB')
     features = pil_to_tensor(img)
     features = resize(features)
     features = torch.unsqueeze(features, dim=0)
