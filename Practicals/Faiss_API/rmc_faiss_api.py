@@ -100,3 +100,31 @@ def predict_image(image: UploadFile = File(...)):
     
         })
 
+@app.post('/predict/similar_images')
+def predict_combined(image: UploadFile = File(...)):
+    #print(text)
+    pil_image = Image.open(image.file)
+    features = image_processor.process_img(pil_image)
+    embeddings = model(features)
+    embeddings = embeddings.view(embeddings.size(0), -1)
+    embeddings = np.array(list(embeddings.tolist()), dtype='float32')
+    D, I = index.search(embeddings.reshape(1, -1), 4)
+    
+    
+    #####################################################################
+    # TODO                                                              #
+    # Process the input  and use it as input for the feature            #
+    # extraction model.File is the image that the user sent to your API #   
+    # Once you have feature embeddings from the model, use that to get  # 
+    # similar images by passing the feature embeddings into FAISS       #
+    # model. This will give you index of similar images.                #            
+    #####################################################################
+
+    return JSONResponse(content={
+    "similar_index": list(I[0].astype('str')), # Return the index of similar images here
+        })
+    
+    
+if __name__ == '__main__':
+  uvicorn.run("api:app", host="0.0.0.0", port=8080)
+# %%
