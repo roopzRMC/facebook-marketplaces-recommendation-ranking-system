@@ -183,7 +183,7 @@ In addition the embeddings output is then supplied to the FAISS ```index.search`
 This is an example output
 
 
-![api response output](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/faiss_api.tiff)
+![api response output](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/faiss_api.png)
 
 ## Docker Image build
 
