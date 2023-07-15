@@ -15,6 +15,7 @@ import image_processor
 from torchvision import datasets, models
 import faiss
 import numpy as np
+import json
 
 ## Load the feature extractor
 
@@ -102,12 +103,21 @@ def predict_image(image: UploadFile = File(...)):
 @app.post('/predict/similar_images')
 def predict_combined(image: UploadFile = File(...)):
     #print(text)
+    with open('final_embeddings.json', "r") as json_file:
+        data_dict = json.load(json_file)
+    ## Create a flattened array of float32 vectors
+    embeddings_array = np.array(list(data_dict.values()), dtype='float32')
+    ## Create a maching array of the vector ids (based on the filenames)
+    embeddings_ids = np.array(list(data_dict.keys()))
     pil_image = Image.open(image.file)
     features = image_processor.process_img(pil_image)
     embeddings = model(features)
     embeddings = embeddings.view(embeddings.size(0), -1)
     embeddings = np.array(list(embeddings.tolist()), dtype='float32')
     D, I = index.search(embeddings.reshape(1, -1), 4)
+    similar_images = []
+    for similar_image in I:
+        similar_images.append(embeddings_ids[similar_image])
     
     
     #####################################################################
@@ -120,7 +130,7 @@ def predict_combined(image: UploadFile = File(...)):
     #####################################################################
 
     return JSONResponse(content={
-    "similar_index": list(I[0].astype('str')), # Return the index of similar images here
+    "similar_index": list(similar_images[0]), # Return the index of similar images here
         })
     
     
