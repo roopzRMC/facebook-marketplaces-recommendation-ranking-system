@@ -145,3 +145,97 @@ The output is gflattened and converted into a float32 numpy array
 Using ```index.search(query_vector.reshape(1, -1), 4)```, the query vector is passed through the index with 4 nearest vectors specified as an argument
 
 This return 4 index values as similar embeddings
+
+## API build and FAISS integration
+The ```api.py``` script is split in to 4 sections:
+
+1. Loading the model through the item feature extractor class
+2. Loading the FAISS index from the ```.pkl``` object
+3. Configuring the api to ingest an image and output the 2048-way feature embedding
+4. Configuring the api to ingest and image and suggest similar images from the FAISS index
+
+### Item feature extractor
+
+The class is initiated with a load of the pretrained resnet50 model from torchhub with the optimised NVIDIA version for GPU use
+
+The model is initiatlised and the final weights from the model trainins process are loaded including the optimiser. The last layer is the removed to expose the pennultimate 2048 output layer
+
+### Loading the FAISS index
+
+The pickle file is loaded having specified the size of the index as 2048 to match the neuron output of the feature extractor
+
+### Ingesting the image via the api and outputing the embeddings
+
+A fastapi post operation is leveraged to ingest a request containing an image payload
+
+One the image has been accepted, it is then processed through the ```process_img()``` found by importing image_processor to convert the image to features for the featureextractor model. The features are passed through the model as embeddings. The embeddings are convereted into a JSON serialisable object through coercing the output of the numpy array to ```float64```
+
+The response is viewable through executing ```response.text```
+
+### Ingesting the image via api operation to produce similar image output from FAISS index
+
+Another dastapi post operation is leverage to ingest a request containing an image payload as the embeddings output method
+
+The original embeddings json file is loaded to allow retrieval of the image file names
+
+In addition the embeddings output is then supplied to the FAISS ```index.search``` method to produce 4 similar images. The ids supplied from the output of the index search is the parsed to the embeddings_json object to retrieve the image filenames that are deemed to be simlar
+
+
+## Docker Image build
+
+To maintain comaptibility with the cuda optimised version of pytorch and torchvision the ```FROM python:3.9``` docker image is selected
+
+So that the app is appropriately self-contained, a working directory ```WORKDIR /app``` is intantiated
+
+Each required file for the api's operation is copied to the working directory;
+
+* requirements.txt
+* api.py
+* image_processor.py
+* index.pickle
+* final_model/weights.pt
+* final_embeddings.json
+
+In addition to the UBUNTU requirements of
+
+* ffmeg
+* libsm6
+* libxext6
+
+a specific pip install command is specified to install the CUDA versions of pytorch libraries
+
+
+```
+RUN pip3 install torch==1.9.1+cu111 torchvision==0.10.1+cu111 torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
+
+```
+
+The remaining additional pip dependencies are specified in the requirements.txt file
+
+## Running the docker image
+
+To ensure that the docker image utilises the gpus required for the api to run the following command is required when running the docker image
+
+```
+docker run --gpus all -p 8080:8080 faiss_api
+```
+
+## Uploading the docker image to docker hub
+
+Log in to docker hub
+
+```
+docker login -u $USERNAME
+```
+
+The image must be tagged appropriately prior to being pushed to the docker hub
+
+```
+docker tag faiss_api rupertcog/faiss_api
+```
+
+The image is then pushed to dockerhub
+
+```
+docker push rupertcog/faiss_api:latest
+```
