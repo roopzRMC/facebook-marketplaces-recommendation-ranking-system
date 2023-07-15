@@ -1,5 +1,15 @@
 FROM python:3.9
 
+WORKDIR /app
+
+
+COPY requirements.txt requirements.txt
+COPY api.py api.py
+COPY image_processor.py image_processor.py
+COPY index.pickle index.pickle
+COPY final_model/weights.pt final_model/weights.py
+
+
 RUN apt-get update
 RUN apt-get install \
     'ffmpeg'\
