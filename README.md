@@ -180,6 +180,10 @@ The original embeddings json file is loaded to allow retrieval of the image file
 
 In addition the embeddings output is then supplied to the FAISS ```index.search``` method to produce 4 similar images. The ids supplied from the output of the index search is the parsed to the embeddings_json object to retrieve the image filenames that are deemed to be simlar
 
+This is an example output
+
+
+![api response output](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/faiss_api.pdf)
 
 ## Docker Image build
 
@@ -211,6 +215,7 @@ RUN pip3 install torch==1.9.1+cu111 torchvision==0.10.1+cu111 torchaudio==0.9.1 
 ```
 
 The remaining additional pip dependencies are specified in the requirements.txt file
+
 
 ## Running the docker image
 
