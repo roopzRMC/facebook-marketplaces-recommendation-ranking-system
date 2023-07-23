@@ -126,7 +126,7 @@ A loop is called to enter every folder in the training images directory
 
 ## FAISS
 
-Refencing FAISS.ipynb
+Referencing ```Practicals/FAISS.ipynb```
 
 Note this also relies on a GPU as the model has been optimised for GPU use.
 
@@ -186,6 +186,8 @@ This is an example output
 ![api response output](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/faiss_api.png)
 
 ## Docker Image build
+
+Referencing ```Practicals/Faiss_API```
 
 To maintain comaptibility with the cuda optimised version of pytorch and torchvision the ```FROM python:3.9``` docker image is selected
 
