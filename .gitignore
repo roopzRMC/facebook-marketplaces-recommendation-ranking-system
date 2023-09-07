@@ -2,4 +2,5 @@ clean_images/
 images/
 CustomerDataset/
 *.csv
+.DS_Store
 
