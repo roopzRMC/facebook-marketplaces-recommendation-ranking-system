@@ -40,7 +40,9 @@ Screenshot for reference
 
 ![validation accuracy](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/validation_accuracy.png)
 
+![training loss](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/training_loss.png)
 
+![validation loss]((https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/validation_loss.png))
 
 
 ## Creating the training and test sets
