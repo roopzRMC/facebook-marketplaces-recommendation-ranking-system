@@ -28,6 +28,16 @@ Moving to a 13 class problem with the pre trained resnet50 model meant that trai
 
 I used a google cloud based 8 core cpu with Nvidia T4 GPU Vertex AI notebook to deal with model training.
 
+However, availbility of the GPU was not assured and therefore I was forced to spin up an AWS based VM using a G3.Xlarge configuration
+
+## Virtual Machine Configuration
+
+* G3.4Xlarge Virtual Machine with deep learning AMI
+* Ubuntu 20.04
+* 250 GB Storage
+* Installation of jupyter lab, ipywidgets and associated pytorch libraries
+* NVIDIA srivers pre-installed
+
 12 hours of training to cover 150 epochs was required to reach a Training Accuracy of 99%, Validation Accuracy of 52%
 
 Further training could have been carried out which may well have reduced the current level of overfitting observed from the tensorboard performance available here
@@ -42,7 +52,9 @@ Screenshot for reference
 
 ![training loss](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/training_loss.png)
 
-![validation loss]((https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/validation_loss.png))
+![validation loss](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/validation_loss.png)
+
+
 
 
 ## Creating the training and test sets
@@ -106,11 +118,11 @@ def process_img(image):
     print(features.shape)
     return features
 ```
-## New Model Version available **
+## Model Training Script
 
-See ```resnet50_pretrained_13_class_unfreeze_v3_final.ipynb```
+Please reference ```resnet50_pretrained_13_class_unfreeze_v3_final.ipynb``` as the main model training script 
 
-This must use a GPU as it is optimised for GPU onlu
+This must use a GPU as it is optimised for GPU only - the pretrained model is loaded from the ```'NVIDIA/DeepLearningExamples:torchhub'``` and therefore expects a GPU device to be available
 
 ## Image Processor
 
@@ -133,6 +145,8 @@ Refencing FAISS.ipynb
 Note this also relies on a GPU as the model has been optimised for GPU use.
 
 ```!pip install faiss-gpu``` is required so that a GPU version of faiss is installed
+
+
 
 To create the FAISS search index, a faiss.IndexFlatL2() class is instantiated with a 2048 dimension (as per the shape of the image vector)
 
