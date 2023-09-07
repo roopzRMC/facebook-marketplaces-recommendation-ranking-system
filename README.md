@@ -73,13 +73,34 @@ Using split folders library I used a 70/30 split across the 13 categories
 
 Changing the batch size from 16 to 32 had serious impacts on GPU when the full training set was used - it ran out of memory. On smaller versions of the dataset, training times increased but overfitting led the difference to be too great between training and validation scores
 
+> Image Size
+
+Lowering the image size required changing the configuration of the first layer to allow for a 64 x 64 image to be ingested
+
+```
+self.resnet50.conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3, bias=False)
+self.resnet50.avgpool = nn.AdaptiveAvgPool2d(1)
+```
+
+> Additional Image Transforms
+
+Both random horizontal flip and rotations were attempted however when implemented in the train loader had the effect of never converging 
+
+This had the effect of drastically decreasing training time but resulted in a poorly generalising model with validation accuracy not rising above 0.15
+
 > Training and Test Image Data Set Sizes
 
 Limiting the total number of training images in each class to 50 or less yielded unusable training results with the scores rarely moving above 20%
 
-> Optimiser
+> Optimisers
 
 SGD Optimiser at a learning rate of 0.01 yielded consistently the best results however the severe level of overfitting could be tempered in future by adding dropout 
+
+Lower learning rates were also tested which had the effect of slower training times but not meaningful positive impact on the validation accuracy or loss
+
+A weight decay of 1e4, momentum and nesterov were added which had the effect of quicker training performance but little positive effect on generalisation
+
+Adam, AdamW and RMSProp were also used with an array of parameters and learning rates specified, however the training accuracy never reached that of SGD within 200 epochs
 
 ## Feature Extractions
 
@@ -142,7 +163,7 @@ A loop is called to enter every folder in the training images directory
 
 Refencing FAISS.ipynb
 
-Note this also relies on a GPU as the model has been optimised for GPU use.
+Note this also relies on a GPU as the classifier has been optimised for GPU use by virtue of the pretrained model being downloaded from the NVIDIA torchhub as specified.
 
 ```!pip install faiss-gpu``` is required so that a GPU version of faiss is installed
 
