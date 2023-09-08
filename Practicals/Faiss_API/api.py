@@ -29,10 +29,6 @@ class ItemFeatureExtractor(torch.nn.Module):
     def forward(self, X):
         return F.softmax(self.resnet50(X))
 
-class TextItem(BaseModel):
-    text: str
-
-
 try:
     model = ItemFeatureExtractor()
     optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
@@ -40,6 +36,7 @@ try:
     model.load_state_dict(checkpoint['model_state_dict'])
     optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
     model = nn.Sequential(*list(model.resnet50.children())[:-1])
+
 #################################################################
 # TO DO                                                          #
 # Load the Feature Extraction model. Above, we have initialized #
@@ -77,9 +74,26 @@ def healthcheck():
   
   return {"message": msg}
 
-  
 @app.post('/predict/feature_embedding')
+
+## Function to generate embeddings from supplied image
 def predict_image(image: UploadFile = File(...)):
+    """
+    Process and predict embeddings for an uploaded image.
+
+    This function takes an uploaded image file, processes it to obtain embeddings
+    using a pre-trained model, and returns the embeddings as a NumPy array.
+
+    Parameters
+    ----------
+    image : UploadFile
+        An uploaded image file to be processed and used for prediction.
+
+    Returns
+    -------
+    np.ndarray
+        An array of embeddings representing the image.
+    """
     pil_image = Image.open(image.file)
     features = image_processor.process_img(pil_image)
     embeddings = model(features)
@@ -101,7 +115,25 @@ def predict_image(image: UploadFile = File(...)):
         })
 
 @app.post('/predict/similar_images')
+
+
 def predict_combined(image: UploadFile = File(...)):
+    """
+    Predict similar images for an uploaded image based on pre-computed embeddings.
+
+    This function takes an uploaded image file, processes it to obtain embeddings
+    using a pre-trained model, and finds similar images based on the computed embeddings.
+
+    Parameters
+    ----------
+    image : UploadFile
+        An uploaded image file to be used for prediction.
+
+    Returns
+    -------
+    list
+        A list of filenames representing similar images to the input image.
+    """    
     #print(text)
     with open('final_embeddings.json', "r") as json_file:
         data_dict = json.load(json_file)
@@ -133,7 +165,7 @@ def predict_combined(image: UploadFile = File(...)):
     "similar_index": list(similar_images[0]), # Return the index of similar images here
         })
     
-    
+
 if __name__ == '__main__':
   uvicorn.run("api:app", host="0.0.0.0", port=8080)
-# %%
+
