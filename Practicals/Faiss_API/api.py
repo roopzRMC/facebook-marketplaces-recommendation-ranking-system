@@ -76,6 +76,7 @@ def healthcheck():
 
 @app.post('/predict/feature_embedding')
 
+
 ## Function to generate embeddings from supplied image
 def predict_image(image: UploadFile = File(...)):
     """

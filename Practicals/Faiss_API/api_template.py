@@ -13,19 +13,37 @@ import torch
 import torch.nn as nn
 from pydantic import BaseModel
 import image_processor
-# %%
-##############################################################
-# TO DO - completed                                          #
-# Import your image processing script here                 #
-##############################################################
 
 # %%
+'''
+Running the image processing script with supplied image
+'''
 image_processor.process_img()
 # %%
 
 ## Created a classifier based on the RESNET50 pretrained model
 
 class ItemFeatureExtractor(torch.nn.Module):
+    """
+    A custom nn.Module class housing the classifier which is
+    based on a gpu-derived pretrained resnet50 from NVIDA torchhub
+    
+    Attributes
+    ----------
+    None
+    
+    
+    Methods
+    -------
+    __init__():
+        Initialises the classifier and loads the model from the torchhub
+        unless it is able to detect a cached instance.
+        Replaces the final layer with a 1000 way neuron for extraction to FAISS
+    
+    forward():
+        Initiates the forward pass
+        
+    """       
     def __init__(self):
         super().__init__()
         self.resnet50 = torch.hub.load('NVIDIA/DeepLearningExamples:torchhub', 'nvidia_resnet50', pretrained=True)
@@ -51,12 +69,6 @@ class ItemFeatureExtractor(torch.nn.Module):
         with torch.no_grad():
             x = self.forward(image)
             return x
-
-# Don't change this, it will be useful for one of the methods in the API
-class TextItem(BaseModel):
-    text: str
-
-
 
 try:
     model = ItemFeatureExtractor()
