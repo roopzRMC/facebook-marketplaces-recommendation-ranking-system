@@ -17,6 +17,21 @@ print(f'there are {len(os.listdir(image_dir))} images in the directory \n')
 # %%
 ## Define a resize function
 def resize_image(final_size, im):
+    """
+    Resize an input image while maintaining its aspect ratio and centering it within a square canvas.
+
+    Parameters
+    ----------
+    final_size : int
+        The target size (width and height) of the square canvas to fit the resized image.
+    im : PIL.Image.Image
+        The input image to be resized.
+
+    Returns
+    -------
+    PIL.Image.Image
+        A new PIL Image object containing the resized and centered image.
+    """
     size = im.size
     ratio = float(final_size) / max(size)
     new_image_size = tuple([int(x*ratio) for x in size])
@@ -26,14 +41,14 @@ def resize_image(final_size, im):
     return new_im
 
 # %%
-'''
+"""
 for each element of the list created through os.listdir of the image
 convert to grayscale as the images are a mix of both RGB and grayscale - these need to be unified
 The resize function is then applied to each element in the for loop
 The new image is saved to the clean images dir
 As there are over 12k images, we have used tqdm to provide an ETA and status bar in the console
 
-'''
+"""
 
 for i in tqdm(range(len(os.listdir(image_dir)))):
     image = Image.open(os.path.join('images',os.listdir(image_dir)[i])).convert('L')
@@ -41,4 +56,3 @@ for i in tqdm(range(len(os.listdir(image_dir)))):
     clean_image.save(os.path.join('clean_images',os.listdir(image_dir)[i]))
 
 
-# %%
