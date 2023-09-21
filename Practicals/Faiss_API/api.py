@@ -24,7 +24,7 @@ class ItemFeatureExtractor(torch.nn.Module):
         super().__init__()
         self.resnet50 = torch.hub.load('NVIDIA/DeepLearningExamples:torchhub', 'nvidia_resnet50', pretrained=True)
         #self.resnet50 = model
-        self.resnet50.fc = torch.nn.Linear(2048,13)
+        self.resnet50.fc = torch.nn.Linear(2048,1000)
 
     def forward(self, X):
         return F.softmax(self.resnet50(X))
@@ -35,7 +35,7 @@ try:
     checkpoint = torch.load('final_model/weights.pt')
     model.load_state_dict(checkpoint['model_state_dict'])
     optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-    model = nn.Sequential(*list(model.resnet50.children())[:-1])
+    #model = nn.Sequential(*list(model.resnet50.children())[:-1])
 
 #################################################################
 # TO DO                                                          #
@@ -51,7 +51,7 @@ except:
 
 ## Load the FAISS index
 try:
-    index = faiss.IndexFlatL2(2048)
+    index = faiss.IndexFlatL2(1000)
     with open('index.pickle', 'rb') as file:
         index = pickle.load(file)
 ##################################################################
