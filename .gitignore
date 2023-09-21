@@ -3,4 +3,5 @@ images/
 CustomerDataset/
 *.csv
 *.DS_Store
+*.zip
 
