@@ -61,10 +61,9 @@ torch.cuda.empty_cache()
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 print(device)
 
-## Creating a train dataset class
 class ItemsTrainDataSet(Dataset):
     """
-    A custom dataset class for image training data.
+    A custom dataset class for image training data which creates the model training image dataset.
     
     This class inherits from the PyTorch Dataset class and will 
     load and preprocess image training data.
@@ -158,7 +157,7 @@ class ItemsTrainDataSet(Dataset):
 ## Creates a validation dataset class
 class ItemsValDataSet(Dataset):
     """
-    A custom dataset class for image validation data.
+    A custom dataset class for image validation data which creates the image validation set.
     
     This class inherits from the PyTorch Dataset class and is designed
     for loading and preprocessing image validation data.
@@ -255,8 +254,6 @@ traindataset = ItemsTrainDataSet()
 
 # Create the validation dataset object
 valdataset = ItemsValDataSet()
-
-## Created a classifier based on the RESNET50 pretrained model
 
 class ItemClassifier(torch.nn.Module):
     """

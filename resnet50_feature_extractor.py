@@ -255,11 +255,9 @@ traindataset = ItemsTrainDataSet()
 # Create the validation dataset object
 valdataset = ItemsValDataSet()
 
-## Create a feature extractor based on the RESNET50 pretrained model
-
 class ItemFeatureExtractor(torch.nn.Module):
     """
-    A custom nn.Module class housing the classifier which is
+    A custom nn.Module class housing the feature extractor which is
     based on a gpu-derived pretrained resnet50 from NVIDA torchhub
     
     Attributes
@@ -281,7 +279,6 @@ class ItemFeatureExtractor(torch.nn.Module):
     def __init__(self):
         super().__init__()
         self.resnet50 = torch.hub.load('NVIDIA/DeepLearningExamples:torchhub', 'nvidia_resnet50', pretrained=True)
-        #self.resnet50 = model
         self.resnet50.fc = torch.nn.Linear(2048,1000)
   
     def forward(self, X):
