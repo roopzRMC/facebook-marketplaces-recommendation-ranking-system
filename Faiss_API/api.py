@@ -1,21 +1,17 @@
-import pickle
-import uvicorn
-import fastapi
-from fastapi.responses import JSONResponse
-from pydantic import BaseModel
-from PIL import Image
-from fastapi import File
-from fastapi import UploadFile
-from fastapi import Form
-import torch.nn.functional as F
-import torch
-import torch.nn as nn
-from pydantic import BaseModel
-import image_processor
-from torchvision import datasets, models
-import faiss
-import numpy as np
-import json
+import fastapi  # Importing the FastAPI framework for building web applications.
+import faiss  # Importing Faiss for similarity search.
+import json  # Importing json module for JSON manipulation.
+import numpy as np  # Importing numpy for numerical computations.
+import pickle  # Importing pickle for object serialization.
+import torch  # Importing the PyTorch library for deep learning.
+import torch.nn as nn  # Importing neural network modules from PyTorch.
+import torch.nn.functional as F  # Importing functional operations for PyTorch neural networks.
+import torchvision  # Importing the torchvision library for computer vision tasks.
+from PIL import Image  # Importing Image from the PIL (Pillow) library for image processing.
+from fastapi import File, UploadFile, Form  # Importing FastAPI modules for file uploads and forms.
+from fastapi.responses import JSONResponse  # Importing FastAPI's JSONResponse for handling JSON responses.
+from pydantic import BaseModel  # Importing Pydantic's BaseModel for defining data models.
+import image_processor  # Importing a custom module named "image_processor."
 
 ## Load the feature extractor
 
@@ -35,15 +31,6 @@ try:
     checkpoint = torch.load('final_model/weights.pt')
     model.load_state_dict(checkpoint['model_state_dict'])
     optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-    #model = nn.Sequential(*list(model.resnet50.children())[:-1])
-
-#################################################################
-# TO DO                                                          #
-# Load the Feature Extraction model. Above, we have initialized #
-# a class that inherits from nn.Module, and has the same        #
-# structure as the model that you used for training it. Load    #
-# the weights in it here.                                       #
-#################################################################
     
 except:
     raise OSError("No Feature Extraction model found. Check that you have the decoder and the model in the correct location")
@@ -54,12 +41,6 @@ try:
     index = faiss.IndexFlatL2(1000)
     with open('index.pickle', 'rb') as file:
         index = pickle.load(file)
-##################################################################
-# TODO                                                           #
-# Load the FAISS model. Use this space to load the FAISS model   #
-# which is was saved as a pickle with all the image embeddings   #
-# fit into it.                                                   #
-##################################################################
     pass
 except:
     raise OSError("No Image model found. Check that you have the encoder and the model in the correct location")
@@ -102,16 +83,8 @@ def predict_image(image: UploadFile = File(...)):
     embeddings = np.array(list(embeddings.tolist()), dtype='float64')
     ## float 32 is not serialisable by JSON but float64 is hence the conversion at the end!
 
-    ################################################################
-    # TODO                                                         #
-    # Process the input and use it as input for the feature        #
-    # extraction model image. File is the image that the user      #
-    # sent to your API. Apply the corresponding methods to extract #
-    # the image features/embeddings.                               #
-    ################################################################
-
     return JSONResponse(content={
-    "features": list(embeddings[0]) # Return the image embeddings here
+    "features": list(embeddings[0])
     
         })
 
@@ -135,7 +108,6 @@ def predict_combined(image: UploadFile = File(...)):
     list
         A list of filenames representing similar images to the input image.
     """    
-    #print(text)
     with open('final_embeddings.json', "r") as json_file:
         data_dict = json.load(json_file)
     ## Create a flattened array of float32 vectors
@@ -147,23 +119,13 @@ def predict_combined(image: UploadFile = File(...)):
     embeddings = model(features)
     embeddings = embeddings.view(embeddings.size(0), -1)
     embeddings = np.array(list(embeddings.tolist()), dtype='float32')
-    D, I = index.search(embeddings.reshape(1, -1), 4)
+    distance, index_pos = index.search(embeddings.reshape(1, -1), 4)
     similar_images = []
-    for similar_image in I:
+    for similar_image in index_pos:
         similar_images.append(embeddings_ids[similar_image])
-    
-    
-    #####################################################################
-    # TODO                                                              #
-    # Process the input  and use it as input for the feature            #
-    # extraction model.File is the image that the user sent to your API #   
-    # Once you have feature embeddings from the model, use that to get  # 
-    # similar images by passing the feature embeddings into FAISS       #
-    # model. This will give you index of similar images.                #            
-    #####################################################################
 
     return JSONResponse(content={
-    "similar_index": list(similar_images[0]), # Return the index of similar images here
+    "similar_index": list(similar_images[0]),
         })
     
 
