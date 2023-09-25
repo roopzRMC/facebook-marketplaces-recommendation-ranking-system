@@ -4,4 +4,4 @@ CustomerDataset/
 *.csv
 *.DS_Store
 *.zip
-
+.ipynb_checkpoints/

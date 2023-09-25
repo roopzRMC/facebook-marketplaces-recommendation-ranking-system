@@ -2,7 +2,7 @@
 Module Name: image_processor
 Author: Rupert Coghlan
 Date: 21/09/2023
-Description: This module creates an embeddings JSON
+Description: This module creates an embeddings JSON through processing each image via the feature extractor
 """
 
 
