@@ -141,7 +141,7 @@ def process_img(image):
 ```
 ## Model Training Script
 
-Please reference ```resnet50_pretrained_13_class_unfreeze_v3_final.ipynb``` as the main model training script 
+Please reference ```resnet50_classifier.py``` as the main model training script 
 
 This must use a GPU as it is optimised for GPU only - the pretrained model is loaded from the ```'NVIDIA/DeepLearningExamples:torchhub'``` and therefore expects a GPU device to be available
 
@@ -161,7 +161,7 @@ A loop is called to enter every folder in the training images directory
 
 ## FAISS
 
-Refencing FAISS.ipynb
+Referencing ```faiss_indexer.py```
 
 Note this also relies on a GPU as the classifier has been optimised for GPU use by virtue of the pretrained model being downloaded from the NVIDIA torchhub as specified.
 
@@ -175,13 +175,13 @@ The embeddings json file is imported as a dictionary, and converted in to a nump
 
 The embeddings are then added to the index using ```add()``` and the index is the deemed as being trained
 
-Once trained as a test, an image is passed through the image feature extractor to derive a 2048 neuron embedding
+Once trained as a test, an image is passed through the image feature extractor to derive a 1000-way neuron embedding
 
 The output is gflattened and converted into a float32 numpy array
 
 Using ```index.search(query_vector.reshape(1, -1), 4)```, the query vector is passed through the index with 4 nearest vectors specified as an argument
 
-This return 4 index values as similar embeddings
+This returns 4 index values as similar embeddings
 
 ## API build and FAISS integration
 The ```api.py``` script is split in to 4 sections:
@@ -224,7 +224,7 @@ This is an example output
 
 ## Docker Image build
 
-To maintain comaptibility with the cuda optimised version of pytorch and torchvision the ```FROM python:3.9``` docker image is selected
+To maintain compatibility with the cuda optimised version of pytorch and torchvision the ```FROM python:3.9``` docker image is selected
 
 So that the app is appropriately self-contained, a working directory ```WORKDIR /app``` is intantiated
 
@@ -232,7 +232,6 @@ Each required file for the api's operation is copied to the working directory;
 
 * requirements.txt
 * api.py
-* image_processor.py
 * index.pickle
 * final_model/weights.pt
 * final_embeddings.json
