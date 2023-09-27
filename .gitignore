@@ -5,3 +5,4 @@ CustomerDataset/
 *.DS_Store
 *.zip
 .ipynb_checkpoints/
+__pycache__
