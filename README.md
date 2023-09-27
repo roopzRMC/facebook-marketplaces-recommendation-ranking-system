@@ -100,7 +100,7 @@ Lower learning rates were also tested which had the effect of slower training ti
 
 A weight decay of 1e4, momentum and nesterov were added which had the effect of quicker training performance but little positive effect on generalisation
 
-Adam, AdamW and RMSProp were also used with an array of parameters and learning rates specified, however the training accuracy never reached that of SGD within 200 epochs
+Adam, AdamW and RMSProp were also used with an array of parameters and learning rates specified, however the training accuracy never reached that of SGD within 200 epochs. Adam rarely reached above 0.21 for training and 0.07 for validation regardless of learning rate and other parameters such as weight decay
 
 ## Feature Extractions
 
@@ -281,3 +281,17 @@ The image is then pushed to dockerhub
 ```
 docker push rupertcog/faiss_api:latest
 ```
+
+## Recommended further experimentation
+
+With additional time I would recommend the following steps
+
+* Data Augmentation
+Increasing the size of the dataset may address the generalisation problem the model suffers from thereby redcuing the performance gap between training and validation
+
+* Randomised Search
+With additional GPU time, performance could be assessed across different combinations of optimiser, learning rate, weight decay, momentum, batch_size to assess which combination would perform most optimally
+
+* Image size
+Experimenting across different images size inputs could additionally reduce training time whilst performing different combination trials of the model
+
