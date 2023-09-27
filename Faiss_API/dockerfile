@@ -8,7 +8,7 @@ COPY api.py api.py
 COPY image_processor.py image_processor.py
 COPY index.pickle index.pickle
 COPY final_model/weights.pt final_model/weights.py
-COPY final_embeddings.json final_embeddings.json
+COPY final_embeddings_sep.json final_embeddings_sep.json
 
 RUN apt-get update
 RUN apt-get install \
