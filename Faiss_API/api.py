@@ -1,13 +1,15 @@
 import fastapi  # Importing the FastAPI framework for building web applications.
 import faiss  # Importing Faiss for similarity search.
 import json  # Importing json module for JSON manipulation.
+import image_processor  # Importing a custom module named "image_processor."
 import numpy as np  # Importing numpy for numerical computations.
 import pickle  # Importing pickle for object serialization.
 import torch  # Importing the PyTorch library for deep learning.
 import torch.nn as nn  # Importing neural network modules from PyTorch.
 import torch.nn.functional as F  # Importing functional operations for PyTorch neural networks.
 import torchvision  # Importing the torchvision library for computer vision tasks.
-import image_processor  # Importing a custom module named "image_processor."
+import uvicorn # Importing uvicorn library for webserver
+
 from PIL import Image  # Importing Image from the PIL (Pillow) library for image processing.
 from fastapi import File, UploadFile, Form  # Importing FastAPI modules for file uploads and forms.
 from fastapi.responses import JSONResponse  # Importing FastAPI's JSONResponse for handling JSON responses.
