@@ -220,7 +220,7 @@ In addition the embeddings output is then supplied to the FAISS ```index.search`
 This is an example output
 
 
-![api response output](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/faiss_screenshots/faiss_api.png)
+![api response output](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/faiss_screenshots/faiss_api.png)
 
 ## Docker Image build
 
