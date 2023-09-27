@@ -46,13 +46,13 @@ https://tensorboard.dev/experiment/s1zOX9TjQI2CrE6pYx0IBw/#scalars
 
 Screenshot for reference
 
-![training accuracy](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/training_accuracy.png)
+![training accuracy](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/tb_screenshots/training_accuracy.png)
 
-![validation accuracy](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/validation_accuracy.png)
+![validation accuracy](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/tb_screenshots/validation_accuracy.png)
 
-![training loss](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/training_loss.png)
+![training loss](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/tb_screenshots/training_loss.png)
 
-![validation loss](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/Practicals/tb_screenshots/validation_loss.png)
+![validation loss](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/tb_screenshots/validation_loss.png)
 
 
 
