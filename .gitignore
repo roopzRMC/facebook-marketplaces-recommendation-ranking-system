@@ -5,3 +5,6 @@ CustomerDataset/
 *.DS_Store
 *.zip
 .ipynb_checkpoints/
+*.pyc
+
+
