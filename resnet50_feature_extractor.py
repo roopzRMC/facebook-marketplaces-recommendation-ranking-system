@@ -5,54 +5,53 @@ Date: 21/09/2023
 Description: This script instantiates a pretrained resnet 50 and trains on a custom datset of 13 classes. The weights are saved in model evaluation
 """
 
-# Import datetime and time for date and time operations
+# Date and time operations
 import datetime
 import time
 
-# Import json for JSON manipulation
+# JSON manipulation
 import json
 
-# Import os for file-related activities and folder navigation
+# File-related activities and folder navigation
 import os
 
-# Import the requests library for HTTP requests
+# HTTP requests
 import requests
 
-# Import warnings for managing warnings
+# Managing warnings
 import warnings
-warnings.filterwarnings('ignore')
 
-# Import NumPy for numerical operations
+# Numerical operations
 import numpy as np
 
-# Import Pandas for data manipulation
+# Data manipulation
 import pandas as pd
 
-# Import the Python Imaging Library (PIL) for image processing
-from PIL import Image
-
-# Import PyTorch
+# Pytorch functionality
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 
-# Import specific components from torchvision.models.resnet
-from torchvision.models.resnet import BasicBlock, Bottleneck
-
-# Import PyTorch Dataset and DataLoader for data handling
-from torch.utils.data import Dataset, DataLoader
-
-# Import PyTorch torchvision.transforms for image transformations during training
-import torchvision.transforms as transforms
-
-# Import PyTorch torchvision.datasets and models
-from torchvision import datasets, models
-
-# Import torchvision for additional image-related functionality
+# Image-related functionality
 import torchvision
 
-# Import SummaryWriter from torch.utils.tensorboard for TensorBoard logging
+# Image transformations during training
+import torchvision.transforms as transforms
+
+# Image processing
+from PIL import Image
+
+# Pytorch Neural network modules
+from torch.nn import nn
+from torch.nn.functional import F
+
+# Dataset and DataLoader for data handling
+from torch.utils.data import Dataset, DataLoader
+
+# TensorBoard logging
 from torch.utils.tensorboard import SummaryWriter
+
+# Computer vision models
+from torchvision import datasets, models
+from torchvision.models.resnet import BasicBlock, Bottleneck
 
 # Clear GPU cache using torch.cuda.empty_cache()
 torch.cuda.empty_cache()

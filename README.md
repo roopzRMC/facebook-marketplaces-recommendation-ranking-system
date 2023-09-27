@@ -54,9 +54,6 @@ Screenshot for reference
 
 ![validation loss](https://github.com/roopzRMC/facebook-marketplaces-recommendation-ranking-system/blob/main/tb_screenshots/validation_loss.png)
 
-
-
-
 ## Creating the training and test sets
 
 ```
@@ -160,6 +157,8 @@ A loop is called to enter every folder in the training images directory
 * The index is written as a dictionary'es key and the embedding as the value
 
 ## FAISS
+
+See FAISS_API folder
 
 Referencing ```faiss_indexer.py```
 

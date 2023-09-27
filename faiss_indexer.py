@@ -59,18 +59,22 @@ def process_img(image):
 with open('Faiss_API/final_embeddings_sep.json', "r") as json_file:
     data_dict = json.load(json_file)
 
-index = faiss.IndexFlatL2(1000)   # build the index, d=size of vectors
-# here we assume xb contains a n-by-d numpy matrix of type float32
+## Build the faiss index with 1000 dimensions
+index = faiss.IndexFlatL2(1000)
 
 ## Create a flattened array of float32 vectors
 embeddings_array = np.array(list(data_dict.values()), dtype='float32')
+
 ## Create a maching array of the vector ids (based on the filenames)
 embeddings_ids = np.array(list(data_dict.keys()))
+
 ## Create the FAISS index by using the add function
 index.add(embeddings_array)
+
+## Confirm FAISS is trained
 print(index.is_trained)
 
-## Created a classifier based on the RESNET50 pretrained model
+## Define feature extractor class
 
 class ItemFeatureExtractor(torch.nn.Module):
     """
