@@ -293,3 +293,29 @@ With additional GPU time, performance could be assessed across different combina
 * Image size
 Experimenting across different images size inputs could additionally reduce training time whilst performing different combination trials of the model
 
+## Directory Descriptions
+
+* Faiss_API
+    - Contains the necessary scripts for formation of the docker image containing the FAISS api and associated modules
+
+* faiss_indexer_development
+    - The original notebook when first developing the faiss index
+
+* final_model
+    - Contains the final pretrained resnet50 model weights after the 200 epoch of training
+
+* final_weights
+    - Contains the weights of the 1000 way feature extractor (based on the pretrained resnet50 model)
+
+* helper_scripts
+    - Contains code used in the original pre processing steps of images and train / validation splits
+
+* model_evaluation
+    - Contains 3 experiments weights of the resnet50 classifier
+
+* resnet50_classifier_development
+    - Contains notebooks used in the evolutaion of resnet50_classifier.py
+
+* resnet50_feature_extractor_development
+    - Contains notebooks used in the evolutaion of the resnet50_feature_extractor.py script
+
